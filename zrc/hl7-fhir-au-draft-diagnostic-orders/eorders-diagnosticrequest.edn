@@ -1,0 +1,110 @@
+{ns hl7-fhir-au-draft-diagnostic-orders.eorders-diagnosticrequest,
+ import #{hl7-fhir-r4-core.Observation
+          hl7-fhir-au-draft-diagnostic-orders.value-set.eorders-servicerequestcategory
+          hl7-fhir-r4-core.Condition
+          zen.fhir
+          hl7-fhir-au-draft-diagnostic-orders.value-set.eorders-servicerequeststatus
+          hl7-fhir-au-core.au-core-patient
+          hl7-fhir-r4-core.value-set.performer-role
+          hl7-fhir-au-draft-diagnostic-orders.eorders-servicerequest-fasting
+          hl7-fhir-au-draft-diagnostic-orders.eorders-practitionerrole
+          hl7-fhir-r4-core.valueset-reference
+          hl7-fhir-r4-core.Coverage
+          hl7-fhir-au-base.result-copies-to
+          hl7-fhir-au-base.au-diagnosticrequest
+          hl7-fhir-au-draft-diagnostic-orders.eorders-encounter
+          hl7-fhir-au-draft-diagnostic-orders.value-set.eorders-priority
+          hl7-fhir-au-draft-diagnostic-orders.eorders-placergroupnumber},
+ schema {:zen.fhir/version "0.6.22",
+         :confirms #{hl7-fhir-au-base.au-diagnosticrequest/schema
+                     zen.fhir/Resource},
+         :zen/tags #{zen.fhir/profile-schema zen/schema},
+         :zen.fhir/profileUri "http://draft.hl7.org.au/fhir/diagnostic-orders/StructureDefinition/eorders-diagnosticrequest",
+         :require #{:category
+                    :insurance
+                    :encounter
+                    :authoredOn
+                    :requisition
+                    :requester
+                    :code},
+         :type zen/map,
+         :zen/desc "EOrders Diagnositic Service Request Profile",
+         :keys {:performerType {:zen.fhir/value-set {:symbol hl7-fhir-r4-core.value-set.performer-role/value-set,
+                                                     :strength :required}},
+                :category {:type zen/vector,
+                           :every {:fhir/flags #{:MS},
+                                   :zen.fhir/value-set {:symbol hl7-fhir-au-draft-diagnostic-orders.value-set.eorders-servicerequestcategory/value-set,
+                                                        :strength :required}},
+                           :minItems 1,
+                           :maxItems 1},
+                :insurance {:type zen/vector,
+                            :every {:type zen/map,
+                                    :keys {:reference {:zen/desc "Reference to contained Coverage resource"}},
+                                    :require #{:reference},
+                                    :fhir/flags #{:MS},
+                                    :confirms #{zen.fhir/Reference},
+                                    :zen.fhir/reference {:refers #{hl7-fhir-r4-core.Coverage/schema}},
+                                    :zen/desc "Reference to Coverage resource for funding type"},
+                            :minItems 1,
+                            :maxItems 1},
+                :request-fasting {:confirms #{hl7-fhir-au-draft-diagnostic-orders.eorders-servicerequest-fasting/schema},
+                                  :fhir/extensionUri "http://draft.hl7.org.au/fhir/diagnostic-orders/StructureDefinition/eorders-servicerequest-fasting",
+                                  :fhir/flags #{:MS}},
+                :supportingInfo {:type zen/vector,
+                                 :every {:type zen/map,
+                                         :keys {:reference {:zen/desc "Reference to contained resource or relative resource URL"}},
+                                         :require #{:reference},
+                                         :fhir/flags #{:MS},
+                                         :confirms #{zen.fhir/Reference},
+                                         :zen.fhir/reference {:refers #{hl7-fhir-r4-core.Observation/schema
+                                                                        hl7-fhir-r4-core.Condition/schema}},
+                                         :zen/desc "Supporting request information such as pregnacy status"}},
+                :encounter {:type zen/map,
+                            :keys {:reference {:zen/desc "Reference to contained Encounter"}},
+                            :require #{:reference},
+                            :fhir/flags #{:MS},
+                            :confirms #{zen.fhir/Reference},
+                            :zen.fhir/reference {:refers #{hl7-fhir-au-draft-diagnostic-orders.eorders-encounter/schema}}},
+                :patientInstruction {:fhir/flags #{:MS},
+                                     :zen/desc "Instructions to patient. Must support where available."},
+                :reasonCode {:type zen/vector,
+                             :every {:type zen/map,
+                                     :require #{:text},
+                                     :fhir/flags #{:MS}},
+                             :maxItems 1},
+                :authoredOn {:zen/desc "Date requested"},
+                :requisition {:confirms #{hl7-fhir-au-draft-diagnostic-orders.eorders-placergroupnumber/schema}},
+                :requester {:confirms #{zen.fhir/Reference},
+                            :zen.fhir/reference {:refers #{hl7-fhir-au-draft-diagnostic-orders.eorders-practitionerrole/schema}}},
+                :priority {:fhir/flags #{:MS},
+                           :zen.fhir/value-set {:symbol hl7-fhir-au-draft-diagnostic-orders.value-set.eorders-priority/value-set,
+                                                :strength :required}},
+                :status {:zen.fhir/value-set {:symbol hl7-fhir-au-draft-diagnostic-orders.value-set.eorders-servicerequeststatus/value-set,
+                                              :strength :required}},
+                :code {:type zen/map,
+                       :keys {:coding {:type zen/vector,
+                                       :every {:type zen/map,
+                                               :keys {:spia-vsref {:confirms #{hl7-fhir-r4-core.valueset-reference/schema},
+                                                                   :fhir/extensionUri "http://hl7.org/fhir/StructureDefinition/valueset-reference",
+                                                                   :type zen/map,
+                                                                   :keys {:valueUri {:zen/desc "Example: 'https://www.rcpa.edu.au/fhir/ValueSet/spia-requesting-refset-3|3.0.1'"}},
+                                                                   :require #{:valueUri},
+                                                                   :fhir/flags #{:MS},
+                                                                   :zen/desc "Url (version specific) of diagnostic request value set the code was selected from"}},
+                                               :zen/desc "Ideally a value set from SNOMED-CT such as RCPA SPIA request codes, but may need to support lab maintained test codes."}},
+                              :text {:zen/desc "Test name selected or free text entered by the user"}},
+                       :require #{:text},
+                       :fhir/flags #{:MS},
+                       :zen/desc "Diagnostic test code or free text test name"},
+                :intent {:match "order"},
+                :copiesto {:type zen/vector,
+                           :every {:confirms #{hl7-fhir-au-base.result-copies-to/schema},
+                                   :fhir/extensionUri "http://hl7.org.au/fhir/StructureDefinition/result-copies-to",
+                                   :fhir/flags #{:MS}}},
+                :subject {:type zen/map,
+                          :keys {:display {:fhir/flags #{:MS}}},
+                          :require #{:reference},
+                          :fhir/flags #{:MS},
+                          :confirms #{zen.fhir/Reference},
+                          :zen.fhir/reference {:refers #{hl7-fhir-au-core.au-core-patient/schema}}}},
+         :zen.fhir/type "ServiceRequest"}}
