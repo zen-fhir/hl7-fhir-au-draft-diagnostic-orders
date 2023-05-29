@@ -1,0 +1,70 @@
+{ns hl7-fhir-au-draft-diagnostic-orders.diagnostic-communicationrequest,
+ import #{hl7-fhir-au-draft-diagnostic-orders.diagnostic-task-group
+          zen.fhir
+          hl7-fhir-au-draft-diagnostic-orders.eorders-diagnosticrequesttask
+          hl7-fhir-au-core.au-core-patient
+          hl7-fhir-au-core.au-core-practitionerrole
+          hl7-fhir-au-draft-diagnostic-orders.value-set.diagnostic-communication-medium
+          hl7-fhir-r4-core.CommunicationRequest
+          hl7-fhir-au-core.au-core-organization
+          hl7-fhir-au-draft-diagnostic-orders.value-set.diagnostic-communication-category},
+ schema {:zen.fhir/version "0.6.27",
+         :confirms #{hl7-fhir-r4-core.CommunicationRequest/schema
+                     zen.fhir/Resource},
+         :zen/tags #{zen.fhir/profile-schema zen/schema},
+         :zen.fhir/profileUri "http://draft.hl7.org.au/fhir/diagnostic-orders/StructureDefinition/diagnostic-communicationrequest",
+         :require #{:category
+                    :medium
+                    :recipient
+                    :authoredOn
+                    :requester
+                    :sender
+                    :doNotPerform
+                    :about},
+         :type zen/map,
+         :zen/desc "Diagnostic provider to patient communication request",
+         :keys {:category {:type zen/vector,
+                           :every {:fhir/flags #{:MS},
+                                   :zen.fhir/value-set {:symbol hl7-fhir-au-draft-diagnostic-orders.value-set.diagnostic-communication-category/value-set,
+                                                        :strength :required},
+                                   :zen/desc "reminder | instruction"},
+                           :minItems 1},
+                :medium {:type zen/vector,
+                         :every {:fhir/flags #{:MS},
+                                 :zen.fhir/value-set {:symbol hl7-fhir-au-draft-diagnostic-orders.value-set.diagnostic-communication-medium/value-set,
+                                                      :strength :required},
+                                 :zen/desc "SMSWRIT | EMAILWRIT"},
+                         :minItems 1,
+                         :maxItems 1},
+                :recipient {:type zen/vector,
+                            :every {:fhir/flags #{:MS},
+                                    :confirms #{zen.fhir/Reference},
+                                    :zen.fhir/reference {:refers #{hl7-fhir-au-core.au-core-patient/schema}},
+                                    :zen/desc "Patient receiving the communication"},
+                            :minItems 1,
+                            :maxItems 1},
+                :authoredOn {:fhir/flags #{:MS},
+                             :zen/desc "Date/time when communication request direction obtained"},
+                :requester {:fhir/flags #{:MS},
+                            :confirms #{zen.fhir/Reference},
+                            :zen.fhir/reference {:refers #{hl7-fhir-au-core.au-core-practitionerrole/schema
+                                                           hl7-fhir-au-core.au-core-organization/schema
+                                                           hl7-fhir-au-core.au-core-patient/schema}},
+                            :zen/desc "Patient, individual provider or provider organisation requesting the communication (or for it to not be performed)"},
+                :status {:const {:value "active"},
+                         :fhir/flags #{:MS},
+                         :zen/desc "active"},
+                :sender {:fhir/flags #{:MS},
+                         :confirms #{zen.fhir/Reference},
+                         :zen.fhir/reference {:refers #{hl7-fhir-au-core.au-core-organization/schema}},
+                         :zen/desc "Diagnostic organization sending the SMS"},
+                :doNotPerform {:fhir/flags #{:MS},
+                               :zen/desc "True when SMS communication with patient is is requested to not be performed"},
+                :about {:type zen/vector,
+                        :every {:fhir/flags #{:MS},
+                                :confirms #{zen.fhir/Reference},
+                                :zen.fhir/reference {:refers #{hl7-fhir-au-draft-diagnostic-orders.diagnostic-task-group/schema
+                                                               hl7-fhir-au-draft-diagnostic-orders.eorders-diagnosticrequesttask/schema}},
+                                :zen/desc "Diagnostic task the communication is about"},
+                        :minItems 1}},
+         :zen.fhir/type "CommunicationRequest"}}

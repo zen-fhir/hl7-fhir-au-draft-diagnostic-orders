@@ -3,10 +3,10 @@
           hl7-fhir-au-core.au-core-patient
           hl7-fhir-au-base.au-encounter},
  schema {:zen/tags #{zen.fhir/profile-schema zen/schema},
-         :zen/desc "Minimum Encounter profile for EOrders Diagnostic Request",
+         :zen/desc "Minimum Encounter for Diagnostic Request",
          :zen.fhir/type "Encounter",
          :zen.fhir/profileUri "http://draft.hl7.org.au/fhir/diagnostic-orders/StructureDefinition/eorders-encounter",
-         :zen.fhir/version "0.6.25-1",
+         :zen.fhir/version "0.6.27",
          :confirms #{hl7-fhir-au-base.au-encounter/schema
                      zen.fhir/Resource},
          :type zen/map,

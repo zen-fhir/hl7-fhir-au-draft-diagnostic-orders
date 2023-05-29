@@ -15,7 +15,7 @@
           hl7-fhir-au-draft-diagnostic-orders.eorders-encounter
           hl7-fhir-au-draft-diagnostic-orders.value-set.eorders-priority
           hl7-fhir-au-draft-diagnostic-orders.eorders-placergroupnumber},
- schema {:zen.fhir/version "0.6.25-1",
+ schema {:zen.fhir/version "0.6.27",
          :confirms #{hl7-fhir-au-base.au-diagnosticrequest/schema
                      zen.fhir/Resource},
          :zen/tags #{zen.fhir/profile-schema zen/schema},
@@ -28,7 +28,7 @@
                     :requester
                     :code},
          :type zen/map,
-         :zen/desc "EOrders Diagnositic Service Request Profile",
+         :zen/desc "Diagnositic Service Request",
          :keys {:performerType {:zen.fhir/value-set {:symbol hl7-fhir-r4-core.value-set.performer-role/value-set,
                                                      :strength :required}},
                 :category {:type zen/vector,
