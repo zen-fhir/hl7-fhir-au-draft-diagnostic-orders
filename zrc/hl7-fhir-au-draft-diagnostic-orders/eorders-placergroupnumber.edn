@@ -6,7 +6,7 @@
          :zen/desc "Diagnostic Placer Group Number",
          :zen.fhir/type "Identifier",
          :zen.fhir/profileUri "http://draft.hl7.org.au/fhir/diagnostic-orders/StructureDefinition/eorders-placergroupnumber",
-         :zen.fhir/version "0.6.29-4",
+         :zen.fhir/version "0.6.30",
          :confirms #{hl7-fhir-au-base.au-localorderidentifier/schema},
          :type zen/map,
          :keys {:type {:type zen/map,
