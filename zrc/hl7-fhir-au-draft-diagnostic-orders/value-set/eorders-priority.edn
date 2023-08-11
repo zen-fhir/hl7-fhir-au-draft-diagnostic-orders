@@ -2,7 +2,7 @@
  import #{zen.fhir},
  value-set {:zen/tags #{zen.fhir/value-set},
             :zen/desc "Diagnostic Priority codes",
-            :zen.fhir/version "0.6.30-7",
+            :zen.fhir/version "0.6.30-10",
             :fhir/code-systems #{{:fhir/url "http://hl7.org/fhir/request-priority",
                                   :zen.fhir/content :bundled}},
             :uri "http://draft.hl7.org.au/fhir/diagnostic-orders/ValueSet/eorders-priority",
