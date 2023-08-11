@@ -1,6 +1,6 @@
 {ns hl7-fhir-au-draft-diagnostic-orders.eorders-doctornumber,
  import #{zen.fhir hl7-fhir-r4-core.Identifier},
- schema {:zen.fhir/version "0.6.30-10",
+ schema {:zen.fhir/version "0.6.30-11",
          :confirms #{hl7-fhir-r4-core.Identifier/schema},
          :zen/tags #{zen/schema zen.fhir/structure-schema},
          :zen.fhir/profileUri "http://draft.hl7.org.au/fhir/diagnostic-orders/StructureDefinition/eorders-doctornumber",
