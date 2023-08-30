@@ -15,7 +15,7 @@
           hl7-fhir-au-draft-diagnostic-orders.eorders-encounter
           hl7-fhir-au-draft-diagnostic-orders.value-set.eorders-priority
           hl7-fhir-au-draft-diagnostic-orders.eorders-placergroupnumber},
- schema {:zen.fhir/version "0.6.30-14",
+ schema {:zen.fhir/version "0.6.31",
          :confirms #{hl7-fhir-au-base.au-diagnosticrequest/schema
                      zen.fhir/Resource},
          :zen/tags #{zen.fhir/profile-schema zen/schema},

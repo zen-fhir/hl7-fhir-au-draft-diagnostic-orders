@@ -5,7 +5,7 @@
          :zen/desc "Diagnositic Task Group",
          :zen.fhir/type "Task",
          :zen.fhir/profileUri "http://draft.hl7.org.au/fhir/diagnostic-orders/StructureDefinition/diagnostic-task-group",
-         :zen.fhir/version "0.6.30-14",
+         :zen.fhir/version "0.6.31",
          :confirms #{zen.fhir/Resource
                      hl7-fhir-au-draft-diagnostic-orders.diagnostic-task-base/schema},
          :type zen/map,
