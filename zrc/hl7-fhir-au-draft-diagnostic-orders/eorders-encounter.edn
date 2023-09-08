@@ -6,7 +6,7 @@
          :zen/desc "Minimum Encounter for Diagnostic Request",
          :zen.fhir/type "Encounter",
          :zen.fhir/profileUri "http://draft.hl7.org.au/fhir/diagnostic-orders/StructureDefinition/eorders-encounter",
-         :zen.fhir/version "0.6.31",
+         :zen.fhir/version "0.6.32",
          :confirms #{hl7-fhir-au-base.au-encounter/schema
                      zen.fhir/Resource},
          :type zen/map,

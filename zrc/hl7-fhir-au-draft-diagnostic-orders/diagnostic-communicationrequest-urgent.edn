@@ -1,0 +1,75 @@
+{ns hl7-fhir-au-draft-diagnostic-orders.diagnostic-communicationrequest-urgent,
+ import #{zen.fhir
+          hl7-fhir-au-draft-diagnostic-orders.value-set.diagnostic-communication-urgent-medium
+          hl7-fhir-au-core.au-core-patient
+          hl7-fhir-au-core.au-core-practitionerrole
+          hl7-fhir-r4-core.CommunicationRequest
+          hl7-fhir-au-draft-diagnostic-orders.eorders-diagnosticrequest
+          hl7-fhir-au-core.au-core-organization
+          hl7-fhir-au-draft-diagnostic-orders.eorders-placergroupnumber},
+ schema {:zen.fhir/version "0.6.32",
+         :confirms #{hl7-fhir-r4-core.CommunicationRequest/schema
+                     zen.fhir/Resource},
+         :zen/tags #{zen.fhir/profile-schema zen/schema},
+         :zen.fhir/profileUri "http://draft.hl7.org.au/fhir/diagnostic-orders/StructureDefinition/diagnostic-communicationrequest-urgent",
+         :require #{:category
+                    :medium
+                    :recipient
+                    :authoredOn
+                    :requester
+                    :groupIdentifier
+                    :sender
+                    :subject
+                    :about},
+         :type zen/map,
+         :zen/desc "Diagnostic provider to placer communication request.  This is used when the requesting clinician requires an urgent response to a diagnostic order.  The request should be marked as Urgent to match the Urgent communication request.",
+         :keys {:category {:type zen/vector,
+                           :every {:match {:coding #{{:system "http://terminology.hl7.org/CodeSystem/communication-category",
+                                                      :code "alert"}}},
+                                   :fhir/flags #{:MS},
+                                   :zen/desc "alert"},
+                           :minItems 1,
+                           :maxItems 1},
+                :medium {:type zen/vector,
+                         :every {:fhir/flags #{:MS},
+                                 :zen.fhir/value-set {:symbol hl7-fhir-au-draft-diagnostic-orders.value-set.diagnostic-communication-urgent-medium/value-set,
+                                                      :strength :required},
+                                 :zen/desc "SMSWRIT | EMAILWRIT | PHONE"},
+                         :minItems 1,
+                         :maxItems 1},
+                :recipient {:type zen/vector,
+                            :every {:fhir/flags #{:MS},
+                                    :confirms #{zen.fhir/Reference},
+                                    :zen.fhir/reference {:refers #{hl7-fhir-au-core.au-core-practitionerrole/schema}},
+                                    :zen/desc "Individual provider receiving the communication"},
+                            :minItems 1,
+                            :maxItems 1},
+                :authoredOn {:fhir/flags #{:MS},
+                             :zen/desc "Date/time when communication request direction obtained"},
+                :requester {:fhir/flags #{:MS},
+                            :confirms #{zen.fhir/Reference},
+                            :zen.fhir/reference {:refers #{hl7-fhir-au-core.au-core-practitionerrole/schema}},
+                            :zen/desc "Individual provider requesting the communication"},
+                :priority {:const {:value "urgent"},
+                           :fhir/flags #{:MS},
+                           :zen/desc "urgent"},
+                :status {:const {:value "active"},
+                         :fhir/flags #{:MS},
+                         :zen/desc "active"},
+                :groupIdentifier {:confirms #{hl7-fhir-au-draft-diagnostic-orders.eorders-placergroupnumber/schema},
+                                  :fhir/flags #{:MS}},
+                :sender {:fhir/flags #{:MS},
+                         :confirms #{zen.fhir/Reference},
+                         :zen.fhir/reference {:refers #{hl7-fhir-au-core.au-core-organization/schema}},
+                         :zen/desc "Diagnostic organization sending the communication"},
+                :subject {:fhir/flags #{:MS},
+                          :confirms #{zen.fhir/Reference},
+                          :zen.fhir/reference {:refers #{hl7-fhir-au-core.au-core-patient/schema}},
+                          :zen/desc "Patient that is the subject of the Diagnostic Service"},
+                :about {:type zen/vector,
+                        :every {:fhir/flags #{:MS},
+                                :confirms #{zen.fhir/Reference},
+                                :zen.fhir/reference {:refers #{hl7-fhir-au-draft-diagnostic-orders.eorders-diagnosticrequest/schema}},
+                                :zen/desc "Diagnostic request the urgent communication is about"},
+                        :minItems 1}},
+         :zen.fhir/type "CommunicationRequest"}}

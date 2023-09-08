@@ -15,7 +15,7 @@
           hl7-fhir-au-draft-diagnostic-orders.eorders-encounter
           hl7-fhir-au-draft-diagnostic-orders.value-set.eorders-priority
           hl7-fhir-au-draft-diagnostic-orders.eorders-placergroupnumber},
- schema {:zen.fhir/version "0.6.31",
+ schema {:zen.fhir/version "0.6.32",
          :confirms #{hl7-fhir-au-base.au-diagnosticrequest/schema
                      zen.fhir/Resource},
          :zen/tags #{zen.fhir/profile-schema zen/schema},
@@ -87,8 +87,9 @@
                                                :keys {:spia-vsref {:confirms #{hl7-fhir-r4-core.valueset-reference/schema},
                                                                    :fhir/extensionUri "http://hl7.org/fhir/StructureDefinition/valueset-reference",
                                                                    :type zen/map,
-                                                                   :keys {:valueUri {:zen/desc "Example: 'https://www.rcpa.edu.au/fhir/ValueSet/spia-requesting-refset-3|3.0.1'"}},
-                                                                   :require #{:valueUri},
+                                                                   :keys {:value {:fhir/polymorphic true,
+                                                                                  :type zen/map,
+                                                                                  :zen/desc "Example: 'https://www.rcpa.edu.au/fhir/ValueSet/spia-requesting-refset-3|3.0.1'"}},
                                                                    :fhir/flags #{:MS},
                                                                    :zen/desc "Url (version specific) of diagnostic request value set the code was selected from"}},
                                                :zen/desc "Ideally a value set from SNOMED-CT such as RCPA SPIA request codes, but may need to support lab maintained test codes."}},

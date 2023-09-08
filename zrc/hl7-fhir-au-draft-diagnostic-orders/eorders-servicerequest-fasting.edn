@@ -1,16 +1,11 @@
 {ns hl7-fhir-au-draft-diagnostic-orders.eorders-servicerequest-fasting,
  import #{zen.fhir hl7-fhir-r4-core.servicerequest-precondition},
- schema {:zen.fhir/version "0.6.31",
-         :confirms #{hl7-fhir-r4-core.servicerequest-precondition/schema},
-         :zen/tags #{zen.fhir/extension
+ schema {:zen/tags #{zen.fhir/extension
                      zen/schema
                      zen.fhir/structure-schema},
-         :zen.fhir/profileUri "http://draft.hl7.org.au/fhir/diagnostic-orders/StructureDefinition/eorders-servicerequest-fasting",
-         :type zen/map,
          :zen/desc "Extension to request patient fasting",
-         :fhir/flags #{:MS},
-         :keys {:text {:fhir/flags #{:MS}}},
          :zen.fhir/type "CodeableConcept",
-         :match {:coding #{{:system "http://snomed.info/sct",
-                            :code "726054005",
-                            :display "After fasting"}}}}}
+         :zen.fhir/profileUri "http://draft.hl7.org.au/fhir/diagnostic-orders/StructureDefinition/eorders-servicerequest-fasting",
+         :zen.fhir/version "0.6.32",
+         :confirms #{hl7-fhir-r4-core.servicerequest-precondition/schema},
+         :fhir/flags #{:MS}}}
